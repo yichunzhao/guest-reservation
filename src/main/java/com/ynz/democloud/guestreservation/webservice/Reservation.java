@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "RESERVATION")
 public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "RESERVATION_ID")
     private Long id;
 
