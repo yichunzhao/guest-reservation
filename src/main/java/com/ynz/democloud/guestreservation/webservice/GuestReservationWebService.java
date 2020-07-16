@@ -1,4 +1,4 @@
-package com.ynz.democloud.guestreservation;
+package com.ynz.democloud.guestreservation.webservice;
 
 
 import lombok.RequiredArgsConstructor;
