@@ -19,7 +19,8 @@ public class StringToDateConverter implements Converter<String, Date> {
         try {
             parsed = simpleDateFormat.parse(source);
         } catch (ParseException e) {
-            log.info("Parse exception: ", e);
+            log.info("String to date parse exception: ", e);
+            throw new IllegalArgumentException("Wrong date format.");
         }
 
         return parsed;
