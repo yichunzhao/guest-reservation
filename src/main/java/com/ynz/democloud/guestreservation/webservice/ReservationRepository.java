@@ -3,9 +3,9 @@ package com.ynz.democloud.guestreservation.webservice;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReservationRepository extends CrudRepository<Reservation, Long> {
-    List<Reservation> findByGuestId(Long guestId);
+    Optional<Reservation> findByGuestId(Long guestId);
 }
