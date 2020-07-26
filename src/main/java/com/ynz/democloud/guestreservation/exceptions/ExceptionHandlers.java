@@ -13,4 +13,9 @@ public class ExceptionHandlers {
         return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<String> handleRestExceptions(Exception e) {
+        return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
