@@ -14,4 +14,5 @@ public class ApplicationConfig extends WebMvcConfigurationSupport {
     protected void addFormatters(FormatterRegistry registry) {
         registry.addConverter(stringToDateConverter);
     }
+
 }

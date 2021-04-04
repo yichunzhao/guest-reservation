@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,21 +31,21 @@ public class GuestReservationWebService {
         reservation.setRestDate(restDate);
 
         Reservation saved = reservationRepository.save(reservation);
-        return new ResponseEntity(saved, HttpStatus.OK);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<Reservation>> getAllReservations() {
         List<Reservation> reservations = new ArrayList<>();
-        reservationRepository.findAll().forEach(r -> reservations.add(r));
-        return new ResponseEntity(reservations, HttpStatus.OK);
+        reservationRepository.findAll().forEach(reservations::add);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
     @GetMapping("guests/{guestId}")
     public ResponseEntity<Reservation> findReservationByGuestId(@PathVariable("guestId") long guestId) {
         Reservation reservation = reservationRepository.findByGuestId(guestId)
                 .orElseThrow(() -> new NotFoundException("Guest: " + guestId + " is not found"));
-        return new ResponseEntity(reservation, HttpStatus.FOUND);
+        return new ResponseEntity<>(reservation, HttpStatus.FOUND);
     }
 
 }

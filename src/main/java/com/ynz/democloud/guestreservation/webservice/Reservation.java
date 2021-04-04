@@ -41,4 +41,5 @@ public class Reservation {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(restDate);
     }
+
 }
