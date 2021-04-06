@@ -1,4 +1,4 @@
-package com.ynz.democloud.guestreservation.webservice;
+package com.ynz.democloud.guestreservation.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -1,6 +1,8 @@
 package com.ynz.democloud.guestreservation.webservice;
 
 
+import com.ynz.democloud.guestreservation.domain.Reservation;
+import com.ynz.democloud.guestreservation.domain.ReservationRepository;
 import com.ynz.democloud.guestreservation.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,12 @@ public class GuestReservationWebService {
         Reservation reservation = reservationRepository.findByGuestId(guestId)
                 .orElseThrow(() -> new NotFoundException("Guest: " + guestId + " is not found"));
         return new ResponseEntity<>(reservation, HttpStatus.FOUND);
+    }
+
+    @GetMapping("dates/{restDate}")
+    public ResponseEntity<List<Reservation>> findReservationsByDate(@PathVariable("restDate") Date date) {
+        List<Reservation> reservations = reservationRepository.findByRestDate(date);
+        return ResponseEntity.status(HttpStatus.FOUND).body(reservations);
     }
 
 }
