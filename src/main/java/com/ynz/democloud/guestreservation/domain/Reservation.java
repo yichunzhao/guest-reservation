@@ -1,5 +1,6 @@
 package com.ynz.democloud.guestreservation.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -37,9 +37,9 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Date restDate;
 
-    public String getRestDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return formatter.format(restDate);
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING, timezone = "Europe/Copenhagen")
+    public Date getRestDate() {
+        return restDate;
     }
 
 }
