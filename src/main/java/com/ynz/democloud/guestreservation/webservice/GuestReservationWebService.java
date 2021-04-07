@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
 public class GuestReservationWebService {
     private final ReservationRepository reservationRepository;
 
-    @PostMapping("guests/{guestId}/rooms/{roomId}/dates/{restDate}")
+    @PostMapping(value = "guests/{guestId}/rooms/{roomId}/dates/{restDate}")
     public ResponseEntity<Reservation> createReservation(@PathVariable("guestId") long guestId
             , @PathVariable("roomId") long roomId, @PathVariable("restDate") Date restDate) {
         Reservation reservation = new Reservation();
@@ -37,10 +38,14 @@ public class GuestReservationWebService {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getAllReservations() {
-        List<Reservation> reservations = new ArrayList<>();
-        reservationRepository.findAll().forEach(reservations::add);
-        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    public ResponseEntity<List<Reservation>> getReservations(@RequestParam(value = "date", required = false) Date date) {
+        if (date == null) {
+            List<Reservation> reservations = new ArrayList<>();
+            reservationRepository.findAll().forEach(reservations::add);
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        }
+        List<Reservation> reservations = reservationRepository.findByRestDate(date);
+        return ResponseEntity.status(HttpStatus.FOUND).body(reservations);
     }
 
     @GetMapping("guests/{guestId}")
@@ -48,12 +53,6 @@ public class GuestReservationWebService {
         Reservation reservation = reservationRepository.findByGuestId(guestId)
                 .orElseThrow(() -> new NotFoundException("Guest: " + guestId + " is not found"));
         return new ResponseEntity<>(reservation, HttpStatus.FOUND);
-    }
-
-    @GetMapping("dates/{restDate}")
-    public ResponseEntity<List<Reservation>> findReservationsByDate(@PathVariable("restDate") Date date) {
-        List<Reservation> reservations = reservationRepository.findByRestDate(date);
-        return ResponseEntity.status(HttpStatus.FOUND).body(reservations);
     }
 
 }
